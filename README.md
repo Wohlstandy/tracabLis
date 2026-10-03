@@ -51,3 +51,5 @@ La lecture conserve la résolution originale pour le code-barres. Les impression
 Un numéro voisin d’une date imprimée est une proposition de lot, à confirmer. Une date sans libellé n’est pas automatiquement qualifiée en DLC ou DDM ; choisir son type est obligatoire avant enregistrement. Les champs structurés sont nettoyés des caractères parasites, les unités normalisées et les numéros de lot mis en majuscules, sans substitution arbitraire O/0 ou I/1. Le texte OCR brut reste consultable.
 
 Les erreurs et confirmations sont présentées dans des fenêtres accessibles, avec retour au champ à corriger. La fiche propose trois étapes, un indicateur d’analyse et des champs invalides visuellement signalés.
+
+Stock : nombre entier de paquets par lot (0 à 99 999), indépendant du poids unitaire, boutons +/− et historique des mouvements. À zéro, un lot en stock passe à Utilisé ; un ajout le remet En stock, sans lever un blocage/retrait. Les anciennes fiches sans compteur affichent 1 paquet (0 si Utilisé), à vérifier. Listes habituelles nommées : modèles de produit sans lot, dates ni photo, inclus dans les sauvegardes JSON.

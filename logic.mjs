@@ -21,5 +21,5 @@ export function extract(text){
  return{name,brand,supplier,quantity,lot,expiry,dateKind:dateLine&&/DDM|de préférence/i.test(dateLine)?'DDM':'DLC',...classify(name)};
 }
 export function deadline(r){return [r.expiry,r.openExpiry].filter(Boolean).sort()[0]||'';}
-export function urgency(r,today=localDate()){if(r.state==='blocked'||r.state==='withdrawn')return'blocked';if(r.state==='used')return'used';const end=deadline(r);if(!end)return'none';const days=Math.round((Date.parse(end+'T12:00:00Z')-Date.parse(today+'T12:00:00Z'))/86400000);return days<0?'expired':days<=3?'soon':'ok';}
+export function urgency(r,today=localDate()){if(r.state==='blocked'||r.state==='withdrawn')return'blocked';if(r.state==='used'||r.stock===0)return'used';const end=deadline(r);if(!end)return'none';const days=Math.round((Date.parse(end+'T12:00:00Z')-Date.parse(today+'T12:00:00Z'))/86400000);return days<0?'expired':days<=3?'soon':'ok';}
 export function csvCell(value){let s=String(value??'');if(/^[\s]*[=+@-]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"';}
