@@ -37,3 +37,7 @@ Le décodeur natif BarcodeDetector est utilisé si disponible, avec repli ZXing 
 Deux lectures : textes dispersés en couleur, puis bloc avec contraste renforcé. Le recadrage au doigt ou à la souris et la rotation ne modifient pas la photo originale. Les champs existants sont conservés sauf si l’utilisateur coche le remplacement. Le texte reconnu peut être corrigé puis reporté dans la fiche. Les numéros de lot sont proposés uniquement si un libellé lot/batch est reconnu ; les dates uniquement à proximité d’un libellé DLC/DDM/consommation. Une date isolée non qualifiée n’est pas attribuée automatiquement à la DLC.
 
 La qualité dépend du cliché. Les tests sur les captures d’emballages réels reconnaissent partiellement produit/marque ; ils ne démontrent pas une extraction complète du lot et de la date sur des zones minuscules. Photographier la zone lot/date de près, sans reflet.
+
+## Import et capture automatiques
+
+Après ajout d’une photo, le site recherche automatiquement un code-barres, interroge Open Food Facts si un code est détecté, puis lit le produit, le lot et les dates. Aucun clic supplémentaire de lecture n’est nécessaire. Les champs existants sont conservés sauf remplacement explicitement demandé. Le statut d’analyse signale les champs encore manquants. Le recadrage relance la lecture automatiquement. Les boutons restent disponibles pour relancer une lecture, mais sont désactivés pendant l’analyse. Vérifier et enregistrer reste une action humaine.
