@@ -1,9 +1,12 @@
 import {validGTIN,cleanCode} from './barcode.mjs';
-import {preparePhoto} from './image-reader.js';
+import {preparePhoto,rotatedPhoto} from './image-reader.js';
+let wasmLoading;
+async function loadWasm(){if(window.ZXingWASM)return;if(!wasmLoading)wasmLoading=new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/zxing-wasm@3.1.4/dist/iife/reader/index.js';s.onload=()=>{ZXingWASM.prepareZXingModule({overrides:{locateFile:path=>'https://cdn.jsdelivr.net/npm/zxing-wasm@3.1.4/dist/reader/'+path}});resolve();};s.onerror=()=>{s.remove();wasmLoading=null;reject(new Error('Lecteur indisponible.'));};document.head.append(s);});await wasmLoading;}
 let loading;
 async function loadDecoder(){if(window.ZXingBrowser)return;if(!loading)loading=new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@zxing/browser@0.1.5/umd/zxing-browser.min.js';s.onload=resolve;s.onerror=()=>{s.remove();loading=null;reject(new Error('Le lecteur ne peut pas être chargé. Vérifiez la connexion.'));};document.head.append(s);});await loading;}
-export async function decodeCanvas(canvas){
+export async function decodeCanvas(canvas,onDetected=()=>{}){
  if('BarcodeDetector'in window){try{const available=await BarcodeDetector.getSupportedFormats();const formats=['ean_13','ean_8','upc_a','upc_e','itf'].filter(f=>available.includes(f));if(formats.length){const results=await new BarcodeDetector({formats}).detect(canvas);const found=results.find(r=>validGTIN(r.rawValue));if(found)return cleanCode(found.rawValue);}}catch{}}
+ try{await loadWasm();const data=canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height);const results=await ZXingWASM.readBarcodes(data,{formats:['EAN13','EAN8','UPCA','UPCE','ITF14'],tryHarder:true,tryRotate:true,tryInvert:true,maxNumberOfSymbols:2});const found=results.find(r=>r.isValid&&validGTIN(r.text));if(found){const points=Object.values(found.position);const left=Math.min(...points.map(p=>p.x)),top=Math.min(...points.map(p=>p.y)),right=Math.max(...points.map(p=>p.x)),bottom=Math.max(...points.map(p=>p.y));onDetected({x:left/canvas.width,y:top/canvas.height,width:(right-left)/canvas.width,height:(bottom-top)/canvas.height});return cleanCode(found.text);}}catch{}
  await loadDecoder();const reader=new ZXingBrowser.BrowserMultiFormatOneDReader();try{const result=reader.decodeFromCanvas(canvas);const code=cleanCode(result.getText());return validGTIN(code)?code:null;}catch{return null;}
 }
-export async function decodePhotos(photos){for(const p of photos){const prepared=await preparePhoto(p);const code=await decodeCanvas(prepared.canvas);if(code)return code;}return null;}
+export async function decodePhotos(photos){for(const p of photos){const source=p.ocrRegion?(await preparePhoto(p)).canvas:await rotatedPhoto(p);const code=await decodeCanvas(source,box=>{if(!p.ocrRegion)p.ocrBarcodeBox=box;});if(code)return code;}return null;}

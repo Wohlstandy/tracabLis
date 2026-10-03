@@ -30,7 +30,7 @@ L’historique est informatif et modifiable avec la sauvegarde ou les outils du 
 
 Scanner le gencode EAN/UPC/GTIN avec la caméra, le lire dans une photo (avec recadrage si besoin) ou saisir ses chiffres. La clé de contrôle est vérifiée. Open Food Facts propose nom, marque et quantité sans jamais importer un lot ou une date d’expiration issus de sa fiche générique. Le code est conservé dans la fiche et les exports. La recherche nécessite Internet et transmet uniquement le code à Open Food Facts, pas les photos. Données Open Food Facts sous ODbL : https://world.openfoodfacts.org/terms-of-use
 
-Le décodeur natif BarcodeDetector est utilisé si disponible, avec repli ZXing Browser 0.1.5 sur les autres navigateurs. Un code flou, minuscule ou fortement déformé peut nécessiter une photo plus proche ou une saisie des chiffres.
+Le décodeur natif BarcodeDetector est utilisé si disponible, avec lecture ZXing-C++ WebAssembly 3.1.4 et repli ZXing Browser 0.1.5 sur les autres navigateurs. Un code flou, minuscule ou fortement déformé peut nécessiter une photo plus proche ou une saisie des chiffres.
 
 ## Lecture des étiquettes
 
@@ -41,3 +41,11 @@ La qualité dépend du cliché. Les tests sur les captures d’emballages réels
 ## Import et capture automatiques
 
 Après ajout d’une photo, le site recherche automatiquement un code-barres, interroge Open Food Facts si un code est détecté, puis lit le produit, le lot et les dates. Aucun clic supplémentaire de lecture n’est nécessaire. Les champs existants sont conservés sauf remplacement explicitement demandé. Le statut d’analyse signale les champs encore manquants. Le recadrage relance la lecture automatiquement. Les boutons restent disponibles pour relancer une lecture, mais sont désactivés pendant l’analyse. Vérifier et enregistrer reste une action humaine.
+
+## Régression sur une photographie réelle
+
+Le test navigateur avec IMG_5048.jpg (2160 × 2880) vérifie après import seul : gencode 3661112059798, produit blanc de dinde, marque Tradilège, poids 180 g, numéro imprimé 63561177 et date 30/09/2026. La photo n’est pas ajoutée au dépôt.
+
+La lecture conserve la résolution originale pour le code-barres. Les impressions en points sont traitées séparément : contraste local, liaison des points et essais de correction d’inclinaison sur des bandes de l’image. La région du poids est recherchée au-dessus du code-barres détecté. Aucune donnée de cet exemple n’est inscrite dans le code de lecture.
+
+Un numéro voisin d’une date imprimée est une proposition de lot, à confirmer. Une date sans libellé n’est pas automatiquement qualifiée en DLC ou DDM ; choisir son type est obligatoire avant enregistrement. Les champs structurés sont nettoyés des caractères parasites, les unités normalisées et les numéros de lot mis en majuscules, sans substitution arbitraire O/0 ou I/1. Le texte OCR brut reste consultable.
