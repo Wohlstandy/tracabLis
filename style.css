@@ -24,3 +24,5 @@
 .row-controls{display:grid;gap:8px;align-self:start}.row-controls button{width:44px;min-height:44px;padding:6px;font-size:20px;margin:0}.row-delete:disabled{cursor:not-allowed}@media(max-width:650px){.row-controls button{width:40px}}
 
 #returnDialog{max-width:540px}#returnForm label{margin:16px 0}#returnError{color:#a33729}
+
+.view-tabs{display:flex;gap:10px;margin-bottom:16px}.view-tabs button{flex:1;min-height:52px}.view-tabs button[aria-pressed=true]{background:#184f3d;color:white;border-color:#184f3d}.stock-products{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0}.stock-products>div{background:white;border:1px solid var(--line);border-radius:10px;padding:16px;overflow-wrap:anywhere}.stock-products p{font-size:12px;color:var(--muted)}#stockOverview{margin-bottom:24px}body[data-view=trace] .stock-counter,body[data-view=trace] [data-return]{display:none}body[data-view=stock] #folders,body[data-view=stock] .workspace>aside>h2{display:none}
