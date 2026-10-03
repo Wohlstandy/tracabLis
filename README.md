@@ -49,3 +49,5 @@ Le test navigateur avec IMG_5048.jpg (2160 × 2880) vérifie après import seul 
 La lecture conserve la résolution originale pour le code-barres. Les impressions en points sont traitées séparément : contraste local, liaison des points et essais de correction d’inclinaison sur des bandes de l’image. La région du poids est recherchée au-dessus du code-barres détecté. Aucune donnée de cet exemple n’est inscrite dans le code de lecture.
 
 Un numéro voisin d’une date imprimée est une proposition de lot, à confirmer. Une date sans libellé n’est pas automatiquement qualifiée en DLC ou DDM ; choisir son type est obligatoire avant enregistrement. Les champs structurés sont nettoyés des caractères parasites, les unités normalisées et les numéros de lot mis en majuscules, sans substitution arbitraire O/0 ou I/1. Le texte OCR brut reste consultable.
+
+Les erreurs et confirmations sont présentées dans des fenêtres accessibles, avec retour au champ à corriger. La fiche propose trois étapes, un indicateur d’analyse et des champs invalides visuellement signalés.
