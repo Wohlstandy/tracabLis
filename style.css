@@ -22,3 +22,5 @@
 .card{grid-template-columns:44px 70px minmax(0,1fr) auto}.record-lock{font-size:20px;padding:6px;align-self:start}.card.locked{border-color:#a8b5ad;background:#f0f2ee}.card.locked .record-lock{background:#dce7df}.stock-direct input:disabled{background:#e7ebe6;color:#52645a}@media(max-width:650px){.card{grid-template-columns:40px 40px minmax(0,1fr);gap:8px}.card .thumb{width:40px}.stock-actions{grid-column:3}.stock-counter{gap:4px}.stock-counter button{min-width:40px}.stock-direct input{width:64px}}
 
 .row-controls{display:grid;gap:8px;align-self:start}.row-controls button{width:44px;min-height:44px;padding:6px;font-size:20px;margin:0}.row-delete:disabled{cursor:not-allowed}@media(max-width:650px){.row-controls button{width:40px}}
+
+#returnDialog{max-width:540px}#returnForm label{margin:16px 0}#returnError{color:#a33729}
